@@ -312,7 +312,10 @@ canvas{max-height:240px;}
   <div class="card">
     <div class="card-head">
       <div class="card-title">≡ Complete Trade Log</div>
-      <button class="btn btn-accent btn-sm" onclick="openModal()">＋ Add</button>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-accent btn-sm" onclick="openModal()">＋ Add</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteAllEntries()" title="Delete all entries">🗑 Delete All</button>
+      </div>
     </div>
     <div class="card-body">
       <div class="filter-row">
@@ -493,6 +496,13 @@ function deleteEntry(id){
   if(!confirm('Delete this entry?')) return;
   trades=trades.filter(t=>t.id!==id);
   save(); renderAll(); toast('Deleted','success');
+}
+
+function deleteAllEntries(){
+  if(trades.length===0){ toast('No entries to delete','error'); return; }
+  if(!confirm(`Delete all ${trades.length} entries? This cannot be undone.`)) return;
+  trades=[];
+  save(); renderAll(); toast('All entries deleted','success');
 }
 
 /* ══════════════════════════════════════════
